@@ -1,0 +1,207 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mapx Blog – API</title><link>https://blog.mapx.at/tags/api/</link><description>Recent content in API on mapx Blog</description><generator>Hugo -- gohugo.io</generator><language>de</language><lastBuildDate>Sun, 08 Nov 2026 04:40:00 +0100</lastBuildDate><atom:link href="https://blog.mapx.at/tags/api/index.xml" rel="self" type="application/rss+xml"/><item><title>Erreichbarkeit mit Bus und Bahn: ÖV-Isochronen</title><link>https://blog.mapx.at/oev-isochrone/</link><pubDate>Sun, 08 Nov 2026 04:40:00 +0100</pubDate><guid>https://blog.mapx.at/oev-isochrone/</guid><description>
+&lt;p&gt;Für Standortwahl, Wohnungssuche oder Einzugsgebiete zählt die Erreichbarkeit zu einer Uhrzeit. Das Profil &lt;code&gt;transit&lt;/code&gt; der Isochronen-API kombiniert Fußwege und öffentliche Verkehrsmittel ab &lt;code&gt;depart_at&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="aufruf"&gt;Aufruf&lt;span class="hx:absolute hx:-mt-20" id="aufruf"&gt;&lt;/span&gt;
+&lt;a href="#aufruf" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/isochrone/transit/16.3738,48.2082?contours_minutes=15,30&amp;amp;depart_at=2026-11-10T08:00&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features | map(.properties | {contour, area_km2})&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;depart_at&lt;/code&gt; ist eine lokale Zeit (Europa/Wien) ohne Offset, mit &lt;code&gt;Z&lt;/code&gt; oder Offset oder Unix-Sekunden. Bis zu vier Zeitstufen sind möglich. Entfernungs-Konturen (&lt;code&gt;contours_meters&lt;/code&gt;) gibt es für &lt;code&gt;transit&lt;/code&gt; nicht.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="ergebnis"&gt;Ergebnis&lt;span class="hx:absolute hx:-mt-20" id="ergebnis"&gt;&lt;/span&gt;
+&lt;a href="#ergebnis" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Antwort ist GeoJSON mit einem Polygon je Stufe. Für den Wiener Stephansplatz mit Abfahrt am 10.11.2026 um 08:00 lieferte die API am 08.11.2026:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Stufe&lt;/th&gt;
+&lt;th&gt;Fläche&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;15 Minuten&lt;/td&gt;
+&lt;td&gt;18,3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30 Minuten&lt;/td&gt;
+&lt;td&gt;140,3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Das Ergebnis lässt sich direkt als Fill-Layer in MapLibre zeichnen, die Eigenschaften enthalten fertige Farben (&lt;code&gt;fill&lt;/code&gt;, &lt;code&gt;fillOpacity&lt;/code&gt;). Mit den Profilen &lt;code&gt;walking&lt;/code&gt;, &lt;code&gt;cycling&lt;/code&gt; und &lt;code&gt;driving&lt;/code&gt; gelingt derselbe Aufruf ohne Fahrplan.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/examples/isochrone/" target="_blank" rel="noopener"&gt;Beispiel Isochrone&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/guides/transit/" target="_blank" rel="noopener"&gt;ÖV-Leitfaden&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/directions/" target="_blank" rel="noopener"&gt;Directions-API&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Reachability by bus and rail: transit isochrones</title><link>https://blog.mapx.at/oev-isochrone-en/</link><pubDate>Sun, 08 Nov 2026 04:40:00 +0100</pubDate><guid>https://blog.mapx.at/oev-isochrone-en/</guid><description>
+&lt;p&gt;For site selection, flat hunting or catchment areas, reachability at a given time of day matters. The &lt;code&gt;transit&lt;/code&gt; profile of the isochrone API combines walking and public transport from &lt;code&gt;depart_at&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="request"&gt;Request&lt;span class="hx:absolute hx:-mt-20" id="request"&gt;&lt;/span&gt;
+&lt;a href="#request" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/isochrone/transit/16.3738,48.2082?contours_minutes=15,30&amp;amp;depart_at=2026-11-10T08:00&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features | map(.properties | {contour, area_km2})&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;depart_at&lt;/code&gt; is a local time (Europe/Vienna) without offset, with &lt;code&gt;Z&lt;/code&gt; or an offset, or Unix seconds. Up to four contours are allowed. Distance contours (&lt;code&gt;contours_meters&lt;/code&gt;) are not available for &lt;code&gt;transit&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="result"&gt;Result&lt;span class="hx:absolute hx:-mt-20" id="result"&gt;&lt;/span&gt;
+&lt;a href="#result" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The response is GeoJSON with one polygon per contour. For Vienna&amp;rsquo;s Stephansplatz departing 10 Nov 2026 at 08:00, the API returned on 8 Nov 2026:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Contour&lt;/th&gt;
+&lt;th&gt;Area&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;15 minutes&lt;/td&gt;
+&lt;td&gt;18.3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30 minutes&lt;/td&gt;
+&lt;td&gt;140.3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The result can be drawn as a MapLibre fill layer; the properties carry ready-made colours (&lt;code&gt;fill&lt;/code&gt;, &lt;code&gt;fillOpacity&lt;/code&gt;). With the profiles &lt;code&gt;walking&lt;/code&gt;, &lt;code&gt;cycling&lt;/code&gt; and &lt;code&gt;driving&lt;/code&gt; the same call works without a timetable.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/examples/isochrone/" target="_blank" rel="noopener"&gt;isochrone example&lt;/a&gt;, &lt;a href="https://docs.mapx.at/guides/transit/" target="_blank" rel="noopener"&gt;transit guide&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/directions/" target="_blank" rel="noopener"&gt;Directions API&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Parcel dossier and parcel search</title><link>https://blog.mapx.at/parzellen-dossier-und-suche-en/</link><pubDate>Sun, 08 Nov 2026 04:00:00 +0100</pubDate><guid>https://blog.mapx.at/parzellen-dossier-und-suche-en/</guid><description>
+&lt;p&gt;Judging a plot means area, land use, buildings and slope. That used to mean opening several sources. The parcel dossier makes it one call.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="which-parcel-is-here"&gt;Which parcel is here?&lt;span class="hx:absolute hx:-mt-20" id="which-parcel-is-here"&gt;&lt;/span&gt;
+&lt;a href="#which-parcel-is-here" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcel/15.3294,48.2272&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].properties | {parcel_number, cadastral_municipality_id, area_m2, is_building_land}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Response on 8 Nov 2026:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;parcel_number&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;473/1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;cadastral_municipality_id&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;14143&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;area_m2&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;562.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;is_building_land&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 data-hextra-search-id="the-dossier"&gt;The dossier&lt;span class="hx:absolute hx:-mt-20" id="the-dossier"&gt;&lt;/span&gt;
+&lt;a href="#the-dossier" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;With the id built from cadastral municipality and plot number (&lt;code&gt;14143-288_4&lt;/code&gt;), &lt;code&gt;/v1/parcels/{id}&lt;/code&gt; returns the full picture:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcels/14143-288_4&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.properties | {area_m2, land_use, buildings, elevation, nearest_transit_stop}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;For this plot in Melk the response says: 65,798 m2, of which 99.4 % farmland (fields, meadows, pasture) and 0.6 % scrub. Buildings: 0. Terrain: 228.5 to 240.8 m, mean slope 2.7 degrees, from the DTM with reference date 15 Sep 2025. Nearest stop: &amp;ldquo;Melk Mittelschule&amp;rdquo; (bus), 503 m away.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="search-by-plot-number"&gt;Search by plot number&lt;span class="hx:absolute hx:-mt-20" id="search-by-plot-number"&gt;&lt;/span&gt;
+&lt;a href="#search-by-plot-number" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Geocoding understands cadastral municipality and number. &lt;code&gt;types=parcel&lt;/code&gt; restricts results to plots:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=KG+14143+Gst+288/4&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-288_4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=Melk+.98&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-b98&amp;#34; (building parcel .98)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The id from the search plugs straight into the dossier call.&lt;/p&gt;
+&lt;p&gt;The basis is the BEV Digital Cadastral Map. All fields: &lt;a href="https://docs.mapx.at/guides/parcels/" target="_blank" rel="noopener"&gt;Parcels guide&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Parzellen-Dossier und Parzellensuche</title><link>https://blog.mapx.at/parzellen-dossier-und-suche/</link><pubDate>Sun, 08 Nov 2026 04:00:00 +0100</pubDate><guid>https://blog.mapx.at/parzellen-dossier-und-suche/</guid><description>
+&lt;p&gt;Wer ein Grundstück beurteilen soll, braucht Fläche, Nutzung, Bebauung und Geländeneigung. Bisher hieß das: mehrere Quellen öffnen. Mit dem Parzellen-Dossier ist es ein Aufruf.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="welche-parzelle-liegt-hier"&gt;Welche Parzelle liegt hier?&lt;span class="hx:absolute hx:-mt-20" id="welche-parzelle-liegt-hier"&gt;&lt;/span&gt;
+&lt;a href="#welche-parzelle-liegt-hier" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcel/15.3294,48.2272&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].properties | {parcel_number, cadastral_municipality_id, area_m2, is_building_land}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Antwort am 08.11.2026:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;parcel_number&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;473/1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;cadastral_municipality_id&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;14143&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;area_m2&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;562.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;is_building_land&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 data-hextra-search-id="das-dossier"&gt;Das Dossier&lt;span class="hx:absolute hx:-mt-20" id="das-dossier"&gt;&lt;/span&gt;
+&lt;a href="#das-dossier" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Mit der Kennung aus Katastralgemeinde und Grundstücksnummer (&lt;code&gt;14143-288_4&lt;/code&gt;) liefert &lt;code&gt;/v1/parcels/{id}&lt;/code&gt; das ganze Bild:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcels/14143-288_4&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.properties | {area_m2, land_use, buildings, elevation, nearest_transit_stop}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Aus der Antwort dieses Grundstücks in Melk: 65 798 m², davon 99,4 % Äcker, Wiesen oder Weiden und 0,6 % verbuschte Fläche. Gebäude: 0. Gelände: 228,5 bis 240,8 m, mittlere Neigung 2,7 Grad, Höhenmodell DTM mit Stichtag 15.09.2025. Nächste Haltestelle: „Melk Mittelschule“ (Bus), 503 m entfernt.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="suche-nach-grundstücksnummer"&gt;Suche nach Grundstücksnummer&lt;span class="hx:absolute hx:-mt-20" id="suche-nach-grundstücksnummer"&gt;&lt;/span&gt;
+&lt;a href="#suche-nach-grundst%c3%bccksnummer" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Geocoding-Suche versteht Katastralgemeinde und Nummer. &lt;code&gt;types=parcel&lt;/code&gt; begrenzt auf Grundstücke:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=KG+14143+Gst+288/4&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-288_4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=Melk+.98&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-b98&amp;#34; (Bauparzelle .98)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Die Kennung aus der Suche passt direkt in den Dossier-Aufruf.&lt;/p&gt;
+&lt;p&gt;Grundlage ist die Digitale Katastralmappe des BEV. Die Doku mit allen Feldern: &lt;a href="https://docs.mapx.at/de/guides/parcels/" target="_blank" rel="noopener"&gt;Parzellen-Leitfaden&lt;/a&gt;.&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,67 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mapx Blog – 3D</title><link>https://blog.mapx.at/tags/3d/</link><description>Recent content in 3D on mapx Blog</description><generator>Hugo -- gohugo.io</generator><language>de</language><lastBuildDate>Sun, 08 Nov 2026 04:10:00 +0100</lastBuildDate><atom:link href="https://blog.mapx.at/tags/3d/index.xml" rel="self" type="application/rss+xml"/><item><title>3D buildings from BEV heights</title><link>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen-en/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen-en/</guid><description>
+&lt;p&gt;Buildings in 3D look good, and they make planning questions visible: shadows, height comparison, sight lines. mapx building tiles carry a height attribute for that, from official BEV data.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="query-the-height"&gt;Query the height&lt;span class="hx:absolute hx:-mt-20" id="query-the-height"&gt;&lt;/span&gt;
+&lt;a href="#query-the-height" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/tilequery/basis/15.3294,48.2272.json?radius=60&amp;amp;limit=3&amp;amp;layers=building_a&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[].properties.height&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;On 8 Nov 2026 this returned three buildings of 10.5 m, 12.5 m and 11 m.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="extrude"&gt;Extrude&lt;span class="hx:absolute hx:-mt-20" id="extrude"&gt;&lt;/span&gt;
+&lt;a href="#extrude" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The &lt;code&gt;streets&lt;/code&gt; style contains the layer &lt;code&gt;building-3d&lt;/code&gt; (type &lt;code&gt;fill-extrusion&lt;/code&gt;, from zoom 14) in group &lt;code&gt;buildings3d&lt;/code&gt;. It reads &lt;code&gt;height&lt;/code&gt; straight from the tiles:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-js" data-lang="js"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;container&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;map&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;streets&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;center&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;15.3294&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;48.2272&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nx"&gt;zoom&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;pitch&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Zoom in and tilt the map (right mouse button or two fingers). The style&amp;rsquo;s groups are listed in &lt;code&gt;metadata[&amp;quot;mapx:groups&amp;quot;]&lt;/code&gt;, so you can toggle the layer without knowing its layer ids. A finished example is in the docs.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/examples/buildings-3d/" target="_blank" rel="noopener"&gt;3D buildings example&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/styles/" target="_blank" rel="noopener"&gt;Styles API&lt;/a&gt;. Height source: BEV, CC BY 4.0.&lt;/p&gt;</description></item><item><title>3D-Gebäude aus BEV-Höhen</title><link>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen/</guid><description>
+&lt;p&gt;Gebäude in 3D wirken nicht nur gut, sie machen Planungsfragen sichtbar: Schatten, Höhenvergleich, Sichtachsen. Die Gebäudekacheln von mapx enthalten dafür ein Höhenattribut aus amtlichen Daten des BEV.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="höhe-abfragen"&gt;Höhe abfragen&lt;span class="hx:absolute hx:-mt-20" id="höhe-abfragen"&gt;&lt;/span&gt;
+&lt;a href="#h%c3%b6he-abfragen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/tilequery/basis/15.3294,48.2272.json?radius=60&amp;amp;limit=3&amp;amp;layers=building_a&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[].properties.height&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Am 08.11.2026 lieferte das drei Gebäude mit 10,5 m, 12,5 m und 11 m Höhe.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="extrudieren"&gt;Extrudieren&lt;span class="hx:absolute hx:-mt-20" id="extrudieren"&gt;&lt;/span&gt;
+&lt;a href="#extrudieren" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Der Stil &lt;code&gt;streets&lt;/code&gt; enthält die Ebene &lt;code&gt;building-3d&lt;/code&gt; (Typ &lt;code&gt;fill-extrusion&lt;/code&gt;, ab Zoom 14) in der Gruppe &lt;code&gt;buildings3d&lt;/code&gt;. Sie liest &lt;code&gt;height&lt;/code&gt; direkt aus den Kacheln:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-js" data-lang="js"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;container&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;map&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;streets&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;center&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;15.3294&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;48.2272&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nx"&gt;zoom&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;pitch&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Zoomen und die Karte kippen (rechte Maustaste oder zwei Finger). Die Gruppen des Stils stehen in &lt;code&gt;metadata[&amp;quot;mapx:groups&amp;quot;]&lt;/code&gt;, damit lässt sich die Ebene ein- und ausschalten, ohne ihre Ebenen-IDs zu kennen. Ein fertiges Beispiel zeigt die Doku.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/examples/buildings-3d/" target="_blank" rel="noopener"&gt;Beispiel 3D-Gebäude&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/styles/" target="_blank" rel="noopener"&gt;Styles-API&lt;/a&gt;. Quelle der Höhen: BEV, CC BY 4.0.&lt;/p&gt;</description></item></channel></rss>

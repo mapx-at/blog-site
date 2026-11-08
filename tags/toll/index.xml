@@ -1,0 +1,37 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mapx Blog – Toll</title><link>https://blog.mapx.at/tags/toll/</link><description>Recent content in Toll on mapx Blog</description><generator>Hugo -- gohugo.io</generator><language>de</language><lastBuildDate>Sun, 08 Nov 2026 04:10:00 +0100</lastBuildDate><atom:link href="https://blog.mapx.at/tags/toll/index.xml" rel="self" type="application/rss+xml"/><item><title>Truck routing with toll information</title><link>https://blog.mapx.at/lkw-routing-mit-maut-en/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/lkw-routing-mit-maut-en/</guid><description>
+&lt;p&gt;A car navigation system happily sends an articulated lorry under a bridge that is too low. The &lt;code&gt;driving-truck&lt;/code&gt; profile routes with the vehicle&amp;rsquo;s dimensions.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="request"&gt;Request&lt;span class="hx:absolute hx:-mt-20" id="request"&gt;&lt;/span&gt;
+&lt;a href="#request" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving-truck/15.6256,48.2049;15.3294,48.2272?weight=40&amp;amp;height=4&amp;amp;width=2.55&amp;amp;length=16.5&amp;amp;truck_type=semi&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0] | {distance, duration, truck, toll}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;weight&lt;/code&gt; (t), &lt;code&gt;height&lt;/code&gt;, &lt;code&gt;width&lt;/code&gt;, &lt;code&gt;length&lt;/code&gt; (m) and &lt;code&gt;truck_type&lt;/code&gt; (&lt;code&gt;semi&lt;/code&gt;, &lt;code&gt;rigid&lt;/code&gt;, &lt;code&gt;trailer&lt;/code&gt;) block roads per vehicle: weight classes, semi and trailer bans, and height, width, weight and length limits. Length limits are only checked when &lt;code&gt;length&lt;/code&gt; is given.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="what-comes-back"&gt;What comes back&lt;span class="hx:absolute hx:-mt-20" id="what-comes-back"&gt;&lt;/span&gt;
+&lt;a href="#what-comes-back" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;St. Poelten to Melk on 8 Nov 2026: 30,095 m, 1,637 s. The same trip with profile &lt;code&gt;driving&lt;/code&gt; gave 30,095 m in 1,286 s. The truck takes longer because trucks get speed caps (per the docs at most 80 km/h on motorways, 70 on rural roads, 50 in built-up areas).&lt;/p&gt;
+&lt;p&gt;The response includes the vehicle used (&lt;code&gt;truck&lt;/code&gt;) and a toll block:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;toll&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;vehicle&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;truck&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_km&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;22.1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_required&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;tariff&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;not_calculated&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;...&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;truck_go_km&lt;/code&gt; is the distance subject to the GO toll (ASFINAG). The API does not compute the tariff, which depends on axle count and emission class. Special toll sections (Brenner, Tauern, Arlberg and others) come on top.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="limits"&gt;Limits&lt;span class="hx:absolute hx:-mt-20" id="limits"&gt;&lt;/span&gt;
+&lt;a href="#limits" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;District-wide bans from ordinances are not routed. Affected roads show up as notices (&lt;code&gt;steps[].notices[]&lt;/code&gt;, &lt;code&gt;type: truck_restriction&lt;/code&gt;). Use &lt;code&gt;exclude=toll&lt;/code&gt; to avoid toll sections.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/guides/navigation/" target="_blank" rel="noopener"&gt;Navigation&lt;/a&gt;, &lt;a href="https://docs.mapx.at/examples/truck-route/" target="_blank" rel="noopener"&gt;truck route example&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/directions/" target="_blank" rel="noopener"&gt;Directions API&lt;/a&gt;. Toll source: ASFINAG, CC BY 4.0.&lt;/p&gt;</description></item></channel></rss>

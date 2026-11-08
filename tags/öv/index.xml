@@ -1,0 +1,39 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mapx Blog – ÖV</title><link>https://blog.mapx.at/tags/%C3%B6v/</link><description>Recent content in ÖV on mapx Blog</description><generator>Hugo -- gohugo.io</generator><language>de</language><lastBuildDate>Sun, 08 Nov 2026 04:40:00 +0100</lastBuildDate><atom:link href="https://blog.mapx.at/tags/%C3%B6v/index.xml" rel="self" type="application/rss+xml"/><item><title>Erreichbarkeit mit Bus und Bahn: ÖV-Isochronen</title><link>https://blog.mapx.at/oev-isochrone/</link><pubDate>Sun, 08 Nov 2026 04:40:00 +0100</pubDate><guid>https://blog.mapx.at/oev-isochrone/</guid><description>
+&lt;p&gt;Für Standortwahl, Wohnungssuche oder Einzugsgebiete zählt die Erreichbarkeit zu einer Uhrzeit. Das Profil &lt;code&gt;transit&lt;/code&gt; der Isochronen-API kombiniert Fußwege und öffentliche Verkehrsmittel ab &lt;code&gt;depart_at&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="aufruf"&gt;Aufruf&lt;span class="hx:absolute hx:-mt-20" id="aufruf"&gt;&lt;/span&gt;
+&lt;a href="#aufruf" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/isochrone/transit/16.3738,48.2082?contours_minutes=15,30&amp;amp;depart_at=2026-11-10T08:00&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features | map(.properties | {contour, area_km2})&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;depart_at&lt;/code&gt; ist eine lokale Zeit (Europa/Wien) ohne Offset, mit &lt;code&gt;Z&lt;/code&gt; oder Offset oder Unix-Sekunden. Bis zu vier Zeitstufen sind möglich. Entfernungs-Konturen (&lt;code&gt;contours_meters&lt;/code&gt;) gibt es für &lt;code&gt;transit&lt;/code&gt; nicht.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="ergebnis"&gt;Ergebnis&lt;span class="hx:absolute hx:-mt-20" id="ergebnis"&gt;&lt;/span&gt;
+&lt;a href="#ergebnis" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Antwort ist GeoJSON mit einem Polygon je Stufe. Für den Wiener Stephansplatz mit Abfahrt am 10.11.2026 um 08:00 lieferte die API am 08.11.2026:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Stufe&lt;/th&gt;
+&lt;th&gt;Fläche&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;15 Minuten&lt;/td&gt;
+&lt;td&gt;18,3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30 Minuten&lt;/td&gt;
+&lt;td&gt;140,3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Das Ergebnis lässt sich direkt als Fill-Layer in MapLibre zeichnen, die Eigenschaften enthalten fertige Farben (&lt;code&gt;fill&lt;/code&gt;, &lt;code&gt;fillOpacity&lt;/code&gt;). Mit den Profilen &lt;code&gt;walking&lt;/code&gt;, &lt;code&gt;cycling&lt;/code&gt; und &lt;code&gt;driving&lt;/code&gt; gelingt derselbe Aufruf ohne Fahrplan.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/examples/isochrone/" target="_blank" rel="noopener"&gt;Beispiel Isochrone&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/guides/transit/" target="_blank" rel="noopener"&gt;ÖV-Leitfaden&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/directions/" target="_blank" rel="noopener"&gt;Directions-API&lt;/a&gt;.&lt;/p&gt;</description></item></channel></rss>

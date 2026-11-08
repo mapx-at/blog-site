@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://blog.mapx.at/sitemap.xml

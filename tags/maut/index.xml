@@ -1,0 +1,37 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mapx Blog – Maut</title><link>https://blog.mapx.at/tags/maut/</link><description>Recent content in Maut on mapx Blog</description><generator>Hugo -- gohugo.io</generator><language>de</language><lastBuildDate>Sun, 08 Nov 2026 04:10:00 +0100</lastBuildDate><atom:link href="https://blog.mapx.at/tags/maut/index.xml" rel="self" type="application/rss+xml"/><item><title>Lkw-Routing mit Maut-Hinweis</title><link>https://blog.mapx.at/lkw-routing-mit-maut/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/lkw-routing-mit-maut/</guid><description>
+&lt;p&gt;Ein Pkw-Navi schickt einen Sattelzug gern unter eine zu niedrige Brücke. Das Profil &lt;code&gt;driving-truck&lt;/code&gt; rechnet mit den Maßen des Fahrzeugs.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="aufruf"&gt;Aufruf&lt;span class="hx:absolute hx:-mt-20" id="aufruf"&gt;&lt;/span&gt;
+&lt;a href="#aufruf" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving-truck/15.6256,48.2049;15.3294,48.2272?weight=40&amp;amp;height=4&amp;amp;width=2.55&amp;amp;length=16.5&amp;amp;truck_type=semi&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0] | {distance, duration, truck, toll}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;weight&lt;/code&gt; (t), &lt;code&gt;height&lt;/code&gt;, &lt;code&gt;width&lt;/code&gt;, &lt;code&gt;length&lt;/code&gt; (m) und &lt;code&gt;truck_type&lt;/code&gt; (&lt;code&gt;semi&lt;/code&gt;, &lt;code&gt;rigid&lt;/code&gt;, &lt;code&gt;trailer&lt;/code&gt;) sperren Straßen je Fahrzeug: Gewichtsklassen, Sattel- und Anhängerverbote, Höhen-, Breiten-, Gewichts- und Längenbeschränkungen. Längenbeschränkungen werden nur geprüft, wenn &lt;code&gt;length&lt;/code&gt; angegeben ist.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="was-zurückkommt"&gt;Was zurückkommt&lt;span class="hx:absolute hx:-mt-20" id="was-zurückkommt"&gt;&lt;/span&gt;
+&lt;a href="#was-zur%c3%bcckkommt" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Für St. Pölten nach Melk am 08.11.2026: 30 095 m, 1 637 s. Dieselbe Strecke mit dem Profil &lt;code&gt;driving&lt;/code&gt; ergab 30 095 m in 1 286 s. Die Lkw-Fahrzeit ist länger, weil für Lkw Höchstgeschwindigkeiten gelten (laut Doku höchstens 80 km/h auf Autobahnen, 70 auf Freilandstraßen, 50 im Ortsgebiet).&lt;/p&gt;
+&lt;p&gt;Die Antwort enthält das verwendete Fahrzeug (&lt;code&gt;truck&lt;/code&gt;) und einen Maut-Block:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;toll&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;vehicle&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;truck&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_km&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;22.1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_required&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;tariff&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;not_calculated&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;...&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;truck_go_km&lt;/code&gt; sind die Kilometer, auf denen die Lkw-Maut (GO-Maut, ASFINAG) anfällt. Den Tarif berechnet die API nicht, er hängt von Achszahl und Emissionsklasse ab. Sondermauten (Brenner, Tauern, Arlberg u. a.) kommen dazu.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="grenzen"&gt;Grenzen&lt;span class="hx:absolute hx:-mt-20" id="grenzen"&gt;&lt;/span&gt;
+&lt;a href="#grenzen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Bezirksweite Fahrverbote aus Verordnungen werden nicht geroutet. Betroffene Straßen erscheinen als Hinweise (&lt;code&gt;steps[].notices[]&lt;/code&gt;, &lt;code&gt;type: truck_restriction&lt;/code&gt;). Mit &lt;code&gt;exclude=toll&lt;/code&gt; lassen sich mautpflichtige Abschnitte meiden.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/guides/navigation/" target="_blank" rel="noopener"&gt;Navigation&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/examples/truck-route/" target="_blank" rel="noopener"&gt;Beispiel Lkw-Route&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/directions/" target="_blank" rel="noopener"&gt;Directions-API&lt;/a&gt;. Mautquelle: ASFINAG, CC BY 4.0.&lt;/p&gt;</description></item></channel></rss>

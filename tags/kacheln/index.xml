@@ -1,0 +1,47 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mapx Blog – Kacheln</title><link>https://blog.mapx.at/tags/kacheln/</link><description>Recent content in Kacheln on mapx Blog</description><generator>Hugo -- gohugo.io</generator><language>de</language><lastBuildDate>Sat, 07 Nov 2026 10:00:00 +0100</lastBuildDate><atom:link href="https://blog.mapx.at/tags/kacheln/index.xml" rel="self" type="application/rss+xml"/><item><title>Wie die Karte gebaut wird</title><link>https://blog.mapx.at/wie-die-karte-gebaut-wird/</link><pubDate>Sat, 07 Nov 2026 10:00:00 +0100</pubDate><guid>https://blog.mapx.at/wie-die-karte-gebaut-wird/</guid><description>
+&lt;p&gt;Eine Karte im Browser besteht aus vielen kleinen Dateien, den Kacheln. Dieser Beitrag zeigt, wie aus den amtlichen Rohdaten solche Kacheln werden, und nennt dabei nur Dinge, die wir selbst gemessen oder festgelegt haben.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="1-rohdaten-laden"&gt;1. Rohdaten laden&lt;span class="hx:absolute hx:-mt-20" id="1-rohdaten-laden"&gt;&lt;/span&gt;
+&lt;a href="#1-rohdaten-laden" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Alle Daten kommen von offenen Download-Adressen der Behörden, zum Beispiel &lt;code&gt;data.bev.gv.at/download/&lt;/code&gt;. Der Kataster liegt je Bundesland als DXF-Dateien je Katastralgemeinde vor, das Geländemodell als 55 Kacheln mit je 50 × 50 km im Format Cloud Optimized GeoTIFF. Weil diese Dateien Höhenwerte als Fließkommazahlen in einem eigenen Koordinatensystem (EPSG:3035) enthalten, lässt sich ein Ausschnitt per HTTP-Range-Anfrage laden, ohne die ganze Datei zu holen.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="2-vektorkacheln-kataster-straßen-namen"&gt;2. Vektorkacheln: Kataster, Straßen, Namen&lt;span class="hx:absolute hx:-mt-20" id="2-vektorkacheln-kataster-straßen-namen"&gt;&lt;/span&gt;
+&lt;a href="#2-vektorkacheln-kataster-stra%c3%9fen-namen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Vektorkarte besteht aus mehreren Themen-Dateien: Nutzung, Gebäude und Grundstücke aus dem Kataster, Straßen und Bahn aus der GIP, Gewässer aus dem Gesamtgewässernetz, Grenzen, Namen und Hausnummern. Jedes Thema wird zu einer eigenen Datei im PMTiles-Format.&lt;/p&gt;
+&lt;p&gt;Die Kacheln erzeugt ein selbst geschriebenes Werkzeug in Rust, das eine Teilmenge der Kommandozeile von tippecanoe nachbildet. Zwei Festlegungen prägen es:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nie ausdünnen.&lt;/strong&gt; Es werden weder Features verworfen noch Details gesenkt, auch nicht bei großen Kacheln. Zu große Kacheln werden gemeldet, nicht stillschweigend verkleinert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gleiches Ergebnis bei jedem Lauf.&lt;/strong&gt; Das Ergebnis ist byte-gleich, egal mit wie vielen Arbeitsprozessen und wie viel Speicher gerechnet wird.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Beim Vergleich mit tippecanoe auf kleinen Ausschnitten (rund 7 × 8 km um Melk, 18 Testfälle) war die Kachelmenge in allen Fällen gleich, die Fläche und Länge im sichtbaren Bereich wich um höchstens 0,05 % ab, mit einer künstlichen Ausnahme bei 1,2 %. Wie sich das Werkzeug auf ganz Österreich verhält, zeigen erst die großen Läufe.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="3-gelände-als-terrain-rgb"&gt;3. Gelände als Terrain-RGB&lt;span class="hx:absolute hx:-mt-20" id="3-gelände-als-terrain-rgb"&gt;&lt;/span&gt;
+&lt;a href="#3-gel%c3%a4nde-als-terrain-rgb" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Aus dem Höhenraster werden Rasterkacheln, in denen jede Höhe in die drei Farbkanäle eines Pixels gepackt ist. Die Formel lautet:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;Höhe = -10000 &amp;#43; (R·65536 &amp;#43; G·256 &amp;#43; B) · 0,1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Das ergibt eine Genauigkeit von 0,1 m. Zwei Entscheidungen dahinter:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Verlustfrei speichern.&lt;/strong&gt; Die Kacheln sind WebP ohne Verlust, weil verlustbehaftete Kompression die kodierten Höhenwerte selbst verfälschen würde, nicht nur das Bild.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bilinear statt Lanczos.&lt;/strong&gt; Beim Umrechnen von EPSG:3035 nach Web-Mercator verwenden wir bilineare Interpolation. Lanczos erzeugt an steilen Klippen Überschwinger, die echte Höhenwerte verändern.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Das fertige Geländemodell reicht von Zoomstufe 5 bis 16. Für Österreich haben wir Höhen zwischen 113 und 3680,6 m geprüft.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="4-höhenlinien-und-schummerung"&gt;4. Höhenlinien und Schummerung&lt;span class="hx:absolute hx:-mt-20" id="4-höhenlinien-und-schummerung"&gt;&lt;/span&gt;
+&lt;a href="#4-h%c3%b6henlinien-und-schummerung" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Höhenlinien werden aus demselben Geländemodell gerechnet und als Vektorkacheln ausgeliefert, im Bereich der Zoomstufen 10 bis 16. Die Schummerung und das 3D-Gelände des Viewers lesen direkt die Terrain-RGB-Kacheln.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="5-ausliefern-ohne-kartenserver"&gt;5. Ausliefern ohne Kartenserver&lt;span class="hx:absolute hx:-mt-20" id="5-ausliefern-ohne-kartenserver"&gt;&lt;/span&gt;
+&lt;a href="#5-ausliefern-ohne-kartenserver" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;PMTiles ist ein einzelnes Archiv mit allen Kacheln eines Themas. Der Browser liest daraus per HTTP-Range-Anfrage genau die Kacheln, die er braucht. Dafür braucht es keinen Kartenserver, sondern einen Webserver, der Range-Anfragen versteht. Im Viewer kümmert sich MapLibre GL JS mit dem PMTiles-Protokoll um den Rest.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="6-suche-routing-und-höhen-api"&gt;6. Suche, Routing und Höhen-API&lt;span class="hx:absolute hx:-mt-20" id="6-suche-routing-und-höhen-api"&gt;&lt;/span&gt;
+&lt;a href="#6-suche-routing-und-h%c3%b6hen-api" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Neben den Kacheln gibt es drei Dienste, die auf denselben Quellen aufbauen:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Suche&lt;/strong&gt; über einen Meilisearch-Index mit Adressen, Orten, Straßen und Grundstücken. Bei unserer Messung am 1. November 2026 hatte er rund 3,05 Millionen Einträge, davon etwa 2,53 Millionen Adressen. Grundstücke sind bisher nur für den Bezirk Melk enthalten.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Routing&lt;/strong&gt; mit einer eigenen Rust-Engine auf dem Routingexport der GIP, für Auto, Rad und zu Fuß, mit Abbiegeverboten.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Höhen-API:&lt;/strong&gt; &lt;code&gt;GET https://api.mapx.at/v1/elevation?points=12.694,47.074&lt;/code&gt; liefert eine GeoJSON-Antwort mit Höhe, Rasterweite und Stichtag, auch als Profil entlang einer Linie.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 data-hextra-search-id="was-noch-fehlt"&gt;Was noch fehlt&lt;span class="hx:absolute hx:-mt-20" id="was-noch-fehlt"&gt;&lt;/span&gt;
+&lt;a href="#was-noch-fehlt" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Nicht alles ist für ganz Österreich fertig. Der Ausbau auf ganz Österreich ist je Thema unterschiedlich weit. Der aktuelle Stand je Produkt steht in der Doku auf docs.mapx.at, nicht hier.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Quellen: interne Dokumentation der Pipeline (DTM, Tiles-Rust, Relief und Höhenlinien, Suche, Routing), Stand 01.–07.11.2026.&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

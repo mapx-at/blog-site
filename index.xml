@@ -1,0 +1,841 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mapx Blog – Aus der Werkstatt</title><link>https://blog.mapx.at/</link><description>Recent content in Aus der Werkstatt on mapx Blog</description><generator>Hugo -- gohugo.io</generator><language>de</language><lastBuildDate>Sun, 08 Nov 2026 04:50:00 +0100</lastBuildDate><atom:link href="https://blog.mapx.at/index.xml" rel="self" type="application/rss+xml"/><item><title>Navigation: closures, voice and banner instructions</title><link>https://blog.mapx.at/navigation-sperren-sprach-und-bannerhinweise-en/</link><pubDate>Sun, 08 Nov 2026 04:50:00 +0100</pubDate><guid>https://blog.mapx.at/navigation-sperren-sprach-und-bannerhinweise-en/</guid><description>
+&lt;p&gt;A navigation app needs three things beyond the line: turn prompts to read aloud, banners to display, and confidence that no known closure sits on the route.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="voice-and-banner-instructions"&gt;Voice and banner instructions&lt;span class="hx:absolute hx:-mt-20" id="voice-and-banner-instructions"&gt;&lt;/span&gt;
+&lt;a href="#voice-and-banner-instructions" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/15.6256,48.2049;15.3294,48.2272?steps=true&amp;amp;voice_instructions=true&amp;amp;banner_instructions=true&amp;amp;language=en&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].legs[0].steps[1] | {voiceInstructions: .voiceInstructions[0], bannerInstructions: .bannerInstructions[0].primary}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;On 8 Nov 2026 one step looked like this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;voiceInstructions&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;distanceAlongGeometry&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;141.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;announcement&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Turn left onto Dr.Ofner-Gasse&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;ssmlAnnouncement&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&amp;lt;speak&amp;gt;...&amp;lt;/speak&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;bannerInstructions&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Dr.Ofner-Gasse&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;turn&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;modifier&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;left&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;driving_side&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;right&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The format follows Mapbox (&lt;code&gt;announcement&lt;/code&gt;, &lt;code&gt;ssmlAnnouncement&lt;/code&gt;, &lt;code&gt;primary&lt;/code&gt; and &lt;code&gt;secondary&lt;/code&gt; with &lt;code&gt;components&lt;/code&gt;), so existing navigation UIs can be reused. Available for the driving profiles, &lt;code&gt;steps=true&lt;/code&gt; is required. Languages: &lt;code&gt;de&lt;/code&gt; and &lt;code&gt;en&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="closures"&gt;Closures&lt;span class="hx:absolute hx:-mt-20" id="closures"&gt;&lt;/span&gt;
+&lt;a href="#closures" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The &lt;code&gt;driving&lt;/code&gt; and &lt;code&gt;driving-traffic&lt;/code&gt; profiles avoid binding full closures from the traffic reports (EVIS/ASFINAG) and list them:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/14.2,48.27;14.45,48.30?overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].closures_avoided&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;On 8 Nov 2026 this returned a ramp closure on the A7 near Linz, with category, road and the report text. Which closures are active changes constantly. Use &lt;code&gt;exclude=motorway&lt;/code&gt; or &lt;code&gt;exclude=toll&lt;/code&gt; to avoid motorways or toll sections.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/guides/navigation/" target="_blank" rel="noopener"&gt;navigation guide&lt;/a&gt;, &lt;a href="https://docs.mapx.at/guides/traffic/" target="_blank" rel="noopener"&gt;traffic&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Navigation: Sperren, Sprach- und Bannerhinweise</title><link>https://blog.mapx.at/navigation-sperren-sprach-und-bannerhinweise/</link><pubDate>Sun, 08 Nov 2026 04:50:00 +0100</pubDate><guid>https://blog.mapx.at/navigation-sperren-sprach-und-bannerhinweise/</guid><description>
+&lt;p&gt;Für eine Navigations-App braucht es drei Dinge zusätzlich zur Linie: Abbiegehinweise zum Vorlesen, Hinweise zum Einblenden und die Gewissheit, dass keine bekannte Sperre auf der Strecke liegt.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="sprach--und-bannerhinweise"&gt;Sprach- und Bannerhinweise&lt;span class="hx:absolute hx:-mt-20" id="sprach--und-bannerhinweise"&gt;&lt;/span&gt;
+&lt;a href="#sprach--und-bannerhinweise" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/15.6256,48.2049;15.3294,48.2272?steps=true&amp;amp;voice_instructions=true&amp;amp;banner_instructions=true&amp;amp;language=en&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].legs[0].steps[1] | {voiceInstructions: .voiceInstructions[0], bannerInstructions: .bannerInstructions[0].primary}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Mit &lt;code&gt;language=en&lt;/code&gt; am 08.11.2026 sah ein Schritt so aus:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;voiceInstructions&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;distanceAlongGeometry&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;141.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;announcement&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Turn left onto Dr.Ofner-Gasse&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;ssmlAnnouncement&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&amp;lt;speak&amp;gt;...&amp;lt;/speak&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;bannerInstructions&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Dr.Ofner-Gasse&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;turn&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;modifier&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;left&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;driving_side&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;right&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Das Format entspricht dem von Mapbox (&lt;code&gt;announcement&lt;/code&gt;, &lt;code&gt;ssmlAnnouncement&lt;/code&gt;, &lt;code&gt;primary&lt;/code&gt; und &lt;code&gt;secondary&lt;/code&gt; mit &lt;code&gt;components&lt;/code&gt;), bestehende Navigations-UIs lassen sich weiterverwenden. Verfügbar für die Fahrzeugprofile, &lt;code&gt;steps=true&lt;/code&gt; ist Voraussetzung. Sprachen: &lt;code&gt;de&lt;/code&gt; und &lt;code&gt;en&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="sperren"&gt;Sperren&lt;span class="hx:absolute hx:-mt-20" id="sperren"&gt;&lt;/span&gt;
+&lt;a href="#sperren" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Profile &lt;code&gt;driving&lt;/code&gt; und &lt;code&gt;driving-traffic&lt;/code&gt; umfahren verbindliche Vollsperren aus den Verkehrsmeldungen (EVIS/ASFINAG) und listen sie auf:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/14.2,48.27;14.45,48.30?overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].closures_avoided&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Am 08.11.2026 kam hier eine Rampensperre der A7 bei Linz zurück, mit Kategorie, Straße und Text der Meldung. Welche Sperren aktiv sind, ändert sich laufend. Mit &lt;code&gt;exclude=motorway&lt;/code&gt; oder &lt;code&gt;exclude=toll&lt;/code&gt; lassen sich Autobahnen bzw. mautpflichtige Abschnitte meiden.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/guides/navigation/" target="_blank" rel="noopener"&gt;Navigationsleitfaden&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/guides/traffic/" target="_blank" rel="noopener"&gt;Verkehr&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Erreichbarkeit mit Bus und Bahn: ÖV-Isochronen</title><link>https://blog.mapx.at/oev-isochrone/</link><pubDate>Sun, 08 Nov 2026 04:40:00 +0100</pubDate><guid>https://blog.mapx.at/oev-isochrone/</guid><description>
+&lt;p&gt;Für Standortwahl, Wohnungssuche oder Einzugsgebiete zählt die Erreichbarkeit zu einer Uhrzeit. Das Profil &lt;code&gt;transit&lt;/code&gt; der Isochronen-API kombiniert Fußwege und öffentliche Verkehrsmittel ab &lt;code&gt;depart_at&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="aufruf"&gt;Aufruf&lt;span class="hx:absolute hx:-mt-20" id="aufruf"&gt;&lt;/span&gt;
+&lt;a href="#aufruf" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/isochrone/transit/16.3738,48.2082?contours_minutes=15,30&amp;amp;depart_at=2026-11-10T08:00&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features | map(.properties | {contour, area_km2})&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;depart_at&lt;/code&gt; ist eine lokale Zeit (Europa/Wien) ohne Offset, mit &lt;code&gt;Z&lt;/code&gt; oder Offset oder Unix-Sekunden. Bis zu vier Zeitstufen sind möglich. Entfernungs-Konturen (&lt;code&gt;contours_meters&lt;/code&gt;) gibt es für &lt;code&gt;transit&lt;/code&gt; nicht.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="ergebnis"&gt;Ergebnis&lt;span class="hx:absolute hx:-mt-20" id="ergebnis"&gt;&lt;/span&gt;
+&lt;a href="#ergebnis" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Antwort ist GeoJSON mit einem Polygon je Stufe. Für den Wiener Stephansplatz mit Abfahrt am 10.11.2026 um 08:00 lieferte die API am 08.11.2026:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Stufe&lt;/th&gt;
+&lt;th&gt;Fläche&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;15 Minuten&lt;/td&gt;
+&lt;td&gt;18,3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30 Minuten&lt;/td&gt;
+&lt;td&gt;140,3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Das Ergebnis lässt sich direkt als Fill-Layer in MapLibre zeichnen, die Eigenschaften enthalten fertige Farben (&lt;code&gt;fill&lt;/code&gt;, &lt;code&gt;fillOpacity&lt;/code&gt;). Mit den Profilen &lt;code&gt;walking&lt;/code&gt;, &lt;code&gt;cycling&lt;/code&gt; und &lt;code&gt;driving&lt;/code&gt; gelingt derselbe Aufruf ohne Fahrplan.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/examples/isochrone/" target="_blank" rel="noopener"&gt;Beispiel Isochrone&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/guides/transit/" target="_blank" rel="noopener"&gt;ÖV-Leitfaden&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/directions/" target="_blank" rel="noopener"&gt;Directions-API&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Reachability by bus and rail: transit isochrones</title><link>https://blog.mapx.at/oev-isochrone-en/</link><pubDate>Sun, 08 Nov 2026 04:40:00 +0100</pubDate><guid>https://blog.mapx.at/oev-isochrone-en/</guid><description>
+&lt;p&gt;For site selection, flat hunting or catchment areas, reachability at a given time of day matters. The &lt;code&gt;transit&lt;/code&gt; profile of the isochrone API combines walking and public transport from &lt;code&gt;depart_at&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="request"&gt;Request&lt;span class="hx:absolute hx:-mt-20" id="request"&gt;&lt;/span&gt;
+&lt;a href="#request" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/isochrone/transit/16.3738,48.2082?contours_minutes=15,30&amp;amp;depart_at=2026-11-10T08:00&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features | map(.properties | {contour, area_km2})&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;depart_at&lt;/code&gt; is a local time (Europe/Vienna) without offset, with &lt;code&gt;Z&lt;/code&gt; or an offset, or Unix seconds. Up to four contours are allowed. Distance contours (&lt;code&gt;contours_meters&lt;/code&gt;) are not available for &lt;code&gt;transit&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="result"&gt;Result&lt;span class="hx:absolute hx:-mt-20" id="result"&gt;&lt;/span&gt;
+&lt;a href="#result" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The response is GeoJSON with one polygon per contour. For Vienna&amp;rsquo;s Stephansplatz departing 10 Nov 2026 at 08:00, the API returned on 8 Nov 2026:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Contour&lt;/th&gt;
+&lt;th&gt;Area&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;15 minutes&lt;/td&gt;
+&lt;td&gt;18.3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30 minutes&lt;/td&gt;
+&lt;td&gt;140.3 km²&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The result can be drawn as a MapLibre fill layer; the properties carry ready-made colours (&lt;code&gt;fill&lt;/code&gt;, &lt;code&gt;fillOpacity&lt;/code&gt;). With the profiles &lt;code&gt;walking&lt;/code&gt;, &lt;code&gt;cycling&lt;/code&gt; and &lt;code&gt;driving&lt;/code&gt; the same call works without a timetable.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/examples/isochrone/" target="_blank" rel="noopener"&gt;isochrone example&lt;/a&gt;, &lt;a href="https://docs.mapx.at/guides/transit/" target="_blank" rel="noopener"&gt;transit guide&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/directions/" target="_blank" rel="noopener"&gt;Directions API&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Elevation, speed limits and signage in Directions</title><link>https://blog.mapx.at/hoehenprofil-tempolimit-wegweisung-en/</link><pubDate>Sun, 08 Nov 2026 04:30:00 +0100</pubDate><guid>https://blog.mapx.at/hoehenprofil-tempolimit-wegweisung-en/</guid><description>
+&lt;p&gt;A route is more than a line. The Directions API adds details per segment taken from GIP.at.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="steps-with-road-speed-and-destination"&gt;Steps with road, speed and destination&lt;span class="hx:absolute hx:-mt-20" id="steps-with-road-speed-and-destination"&gt;&lt;/span&gt;
+&lt;a href="#steps-with-road-speed-and-destination" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/16.3738,48.2082;15.6256,48.2049?steps=true&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;[.routes[0].legs[0].steps[] | select(.destinations!=null or .ref!=null) | {name, ref, destinations, maxspeed}] | .[0:3]&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Response on 8 Nov 2026 (Vienna to St. Poelten):&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;West Autobahn&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;A1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;destinations&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;maxspeed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;unknown&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;destinations&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;St. Pölten, Krems&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;maxspeed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;unknown&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Kremser Schnellstraße&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;S33&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;destinations&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;St. Pölten, Krems&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;maxspeed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;unknown&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}}]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;ref&lt;/code&gt; is the road number, &lt;code&gt;destinations&lt;/code&gt; are the places on the road signs. If the legal speed is not known the value is &lt;code&gt;{&amp;quot;unknown&amp;quot;: true}&lt;/code&gt;, otherwise for example &lt;code&gt;{&amp;quot;speed&amp;quot;: 50, &amp;quot;unit&amp;quot;: &amp;quot;km/h&amp;quot;}&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="speed-limit-and-elevation-per-segment"&gt;Speed limit and elevation per segment&lt;span class="hx:absolute hx:-mt-20" id="speed-limit-and-elevation-per-segment"&gt;&lt;/span&gt;
+&lt;a href="#speed-limit-and-elevation-per-segment" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;annotations&lt;/code&gt; adds the values for each geometry segment:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/15.6256,48.2049;15.3294,48.2272?annotations=maxspeed,elevation&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].legs[0].annotation | {maxspeed: .maxspeed[0:4], elevation: .elevation[0:4]}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;elevation&lt;/code&gt; is the mean height of the segment in metres (in the example 271.4, 271.2, 271.1, 270.9). For bike and foot, steps also carry &lt;code&gt;ascent_m&lt;/code&gt;, &lt;code&gt;descent_m&lt;/code&gt; and &lt;code&gt;grade_pct&lt;/code&gt;; &lt;code&gt;routes[].summary&lt;/code&gt; condenses ascent, descent, maximum grade and elevation range.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/api/directions/" target="_blank" rel="noopener"&gt;Directions API&lt;/a&gt;, &lt;a href="https://docs.mapx.at/guides/elevation-profile/" target="_blank" rel="noopener"&gt;elevation profile&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Höhenprofil, Tempolimit und Wegweisung in Directions</title><link>https://blog.mapx.at/hoehenprofil-tempolimit-wegweisung/</link><pubDate>Sun, 08 Nov 2026 04:30:00 +0100</pubDate><guid>https://blog.mapx.at/hoehenprofil-tempolimit-wegweisung/</guid><description>
+&lt;p&gt;Eine Route ist mehr als eine Linie. Aus der GIP.at übernimmt die Directions-API zusätzliche Angaben je Abschnitt.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="schritte-mit-straße-tempo-und-ziel"&gt;Schritte mit Straße, Tempo und Ziel&lt;span class="hx:absolute hx:-mt-20" id="schritte-mit-straße-tempo-und-ziel"&gt;&lt;/span&gt;
+&lt;a href="#schritte-mit-stra%c3%9fe-tempo-und-ziel" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/16.3738,48.2082;15.6256,48.2049?steps=true&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;[.routes[0].legs[0].steps[] | select(.destinations!=null or .ref!=null) | {name, ref, destinations, maxspeed}] | .[0:3]&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Antwort am 08.11.2026 (Wien nach St. Pölten):&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;West Autobahn&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;A1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;destinations&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;maxspeed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;unknown&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;destinations&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;St. Pölten, Krems&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;maxspeed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;unknown&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Kremser Schnellstraße&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;S33&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;destinations&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;St. Pölten, Krems&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;maxspeed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;unknown&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}}]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;ref&lt;/code&gt; ist die Straßennummer, &lt;code&gt;destinations&lt;/code&gt; sind die Ziele auf der Wegweisung. Ist die erlaubte Geschwindigkeit nicht bekannt, steht &lt;code&gt;{&amp;quot;unknown&amp;quot;: true}&lt;/code&gt;, sonst zum Beispiel &lt;code&gt;{&amp;quot;speed&amp;quot;: 50, &amp;quot;unit&amp;quot;: &amp;quot;km/h&amp;quot;}&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="tempolimit-und-höhe-je-segment"&gt;Tempolimit und Höhe je Segment&lt;span class="hx:absolute hx:-mt-20" id="tempolimit-und-höhe-je-segment"&gt;&lt;/span&gt;
+&lt;a href="#tempolimit-und-h%c3%b6he-je-segment" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Mit &lt;code&gt;annotations&lt;/code&gt; kommen die Werte für jedes Geometriesegment mit:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving/15.6256,48.2049;15.3294,48.2272?annotations=maxspeed,elevation&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].legs[0].annotation | {maxspeed: .maxspeed[0:4], elevation: .elevation[0:4]}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;elevation&lt;/code&gt; ist die mittlere Höhe des Segments in Metern (im Beispiel 271,4; 271,2; 271,1; 270,9). Für Rad und zu Fuß enthält die Route zusätzlich &lt;code&gt;ascent_m&lt;/code&gt;, &lt;code&gt;descent_m&lt;/code&gt; und &lt;code&gt;grade_pct&lt;/code&gt;; &lt;code&gt;routes[].summary&lt;/code&gt; fasst Anstieg, Gefälle, maximale Steigung und Höhenbereich zusammen.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/api/directions/" target="_blank" rel="noopener"&gt;Directions-API&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/guides/elevation-profile/" target="_blank" rel="noopener"&gt;Höhenprofil&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Bike and MTB routing with a cycle-route layer</title><link>https://blog.mapx.at/rad-mtb-profil-und-radrouten-en/</link><pubDate>Sun, 08 Nov 2026 04:20:00 +0100</pubDate><guid>https://blog.mapx.at/rad-mtb-profil-und-radrouten-en/</guid><description>
+&lt;p&gt;Cyclists care about more than distance: how much climbing, how steep, on what surface. The Directions API provides that for the profiles &lt;code&gt;cycling&lt;/code&gt; and &lt;code&gt;cycling-mtb&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="request"&gt;Request&lt;span class="hx:absolute hx:-mt-20" id="request"&gt;&lt;/span&gt;
+&lt;a href="#request" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/cycling-mtb/15.3294,48.2272;15.4,48.2?steps=true&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].summary, (.routes[0].legs[0].steps[1] | {name, bike_infrastructure, surface, ascent_m, descent_m, grade_pct})&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Response on 8 Nov 2026 (Melk, about 8.3 km):&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ascent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;48.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;descent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;37.9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;max_grade_pct&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;8.8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;min_elevation_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;211.8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;max_elevation_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;252.5&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Linzer Straße&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;bike_infrastructure&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;surface&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;paved&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ascent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;descent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;grade_pct&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;bike_infrastructure&lt;/code&gt; distinguishes &lt;code&gt;cycleway&lt;/code&gt;, &lt;code&gt;lane&lt;/code&gt;, &lt;code&gt;shared&lt;/code&gt; and &lt;code&gt;none&lt;/code&gt;; &lt;code&gt;surface&lt;/code&gt; distinguishes &lt;code&gt;paved&lt;/code&gt;, &lt;code&gt;cobblestone&lt;/code&gt;, &lt;code&gt;unpaved&lt;/code&gt;, &lt;code&gt;offroad&lt;/code&gt; and &lt;code&gt;unknown&lt;/code&gt;. The data comes from GIP.at.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="cycle-routes-on-the-map"&gt;Cycle routes on the map&lt;span class="hx:absolute hx:-mt-20" id="cycle-routes-on-the-map"&gt;&lt;/span&gt;
+&lt;a href="#cycle-routes-on-the-map" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The signposted bike and MTB routes are part of the &lt;code&gt;streets&lt;/code&gt; style as layer group &lt;code&gt;bike_routes&lt;/code&gt; (off by default):&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-js" data-lang="js"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;container&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;map&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;streets&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;center&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;15.45&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;48.3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nx"&gt;zoom&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addControl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;LayerControl&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;groups&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;bike_routes&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;relief&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;}),&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;top-right&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/use-cases/tourism/" target="_blank" rel="noopener"&gt;tourism use case&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/directions/" target="_blank" rel="noopener"&gt;Directions API&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Rad- und MTB-Routing mit Radrouten-Ebene</title><link>https://blog.mapx.at/rad-mtb-profil-und-radrouten/</link><pubDate>Sun, 08 Nov 2026 04:20:00 +0100</pubDate><guid>https://blog.mapx.at/rad-mtb-profil-und-radrouten/</guid><description>
+&lt;p&gt;Für Radfahrende zählt neben der Länge vor allem: wie viel bergauf, wie steil, auf welchem Belag. Die Directions-API liefert das für die Profile &lt;code&gt;cycling&lt;/code&gt; und &lt;code&gt;cycling-mtb&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="aufruf"&gt;Aufruf&lt;span class="hx:absolute hx:-mt-20" id="aufruf"&gt;&lt;/span&gt;
+&lt;a href="#aufruf" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/cycling-mtb/15.3294,48.2272;15.4,48.2?steps=true&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0].summary, (.routes[0].legs[0].steps[1] | {name, bike_infrastructure, surface, ascent_m, descent_m, grade_pct})&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Antwort am 08.11.2026 (Melk, rund 8,3 km):&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ascent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;48.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;descent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;37.9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;max_grade_pct&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;8.8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;min_elevation_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;211.8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;max_elevation_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;252.5&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Linzer Straße&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;bike_infrastructure&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;surface&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;paved&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ascent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;descent_m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;grade_pct&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;bike_infrastructure&lt;/code&gt; unterscheidet &lt;code&gt;cycleway&lt;/code&gt;, &lt;code&gt;lane&lt;/code&gt;, &lt;code&gt;shared&lt;/code&gt; und &lt;code&gt;none&lt;/code&gt;, &lt;code&gt;surface&lt;/code&gt; unterscheidet &lt;code&gt;paved&lt;/code&gt;, &lt;code&gt;cobblestone&lt;/code&gt;, &lt;code&gt;unpaved&lt;/code&gt;, &lt;code&gt;offroad&lt;/code&gt; und &lt;code&gt;unknown&lt;/code&gt;. Die Daten stammen aus der GIP.at.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="radrouten-auf-der-karte"&gt;Radrouten auf der Karte&lt;span class="hx:absolute hx:-mt-20" id="radrouten-auf-der-karte"&gt;&lt;/span&gt;
+&lt;a href="#radrouten-auf-der-karte" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die beschilderten Rad- und MTB-Routen sind im Stil &lt;code&gt;streets&lt;/code&gt; als Ebenengruppe &lt;code&gt;bike_routes&lt;/code&gt; enthalten (Ausgangszustand: aus):&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-js" data-lang="js"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;container&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;map&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;streets&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;center&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;15.45&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;48.3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nx"&gt;zoom&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addControl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;LayerControl&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;groups&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;bike_routes&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;relief&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;}),&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;top-right&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/use-cases/tourism/" target="_blank" rel="noopener"&gt;Tourismus-Leitfaden&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/directions/" target="_blank" rel="noopener"&gt;Directions-API&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>3D buildings from BEV heights</title><link>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen-en/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen-en/</guid><description>
+&lt;p&gt;Buildings in 3D look good, and they make planning questions visible: shadows, height comparison, sight lines. mapx building tiles carry a height attribute for that, from official BEV data.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="query-the-height"&gt;Query the height&lt;span class="hx:absolute hx:-mt-20" id="query-the-height"&gt;&lt;/span&gt;
+&lt;a href="#query-the-height" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/tilequery/basis/15.3294,48.2272.json?radius=60&amp;amp;limit=3&amp;amp;layers=building_a&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[].properties.height&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;On 8 Nov 2026 this returned three buildings of 10.5 m, 12.5 m and 11 m.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="extrude"&gt;Extrude&lt;span class="hx:absolute hx:-mt-20" id="extrude"&gt;&lt;/span&gt;
+&lt;a href="#extrude" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The &lt;code&gt;streets&lt;/code&gt; style contains the layer &lt;code&gt;building-3d&lt;/code&gt; (type &lt;code&gt;fill-extrusion&lt;/code&gt;, from zoom 14) in group &lt;code&gt;buildings3d&lt;/code&gt;. It reads &lt;code&gt;height&lt;/code&gt; straight from the tiles:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-js" data-lang="js"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;container&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;map&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;streets&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;center&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;15.3294&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;48.2272&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nx"&gt;zoom&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;pitch&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Zoom in and tilt the map (right mouse button or two fingers). The style&amp;rsquo;s groups are listed in &lt;code&gt;metadata[&amp;quot;mapx:groups&amp;quot;]&lt;/code&gt;, so you can toggle the layer without knowing its layer ids. A finished example is in the docs.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/examples/buildings-3d/" target="_blank" rel="noopener"&gt;3D buildings example&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/styles/" target="_blank" rel="noopener"&gt;Styles API&lt;/a&gt;. Height source: BEV, CC BY 4.0.&lt;/p&gt;</description></item><item><title>3D-Gebäude aus BEV-Höhen</title><link>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/3d-gebaeude-aus-bev-hoehen/</guid><description>
+&lt;p&gt;Gebäude in 3D wirken nicht nur gut, sie machen Planungsfragen sichtbar: Schatten, Höhenvergleich, Sichtachsen. Die Gebäudekacheln von mapx enthalten dafür ein Höhenattribut aus amtlichen Daten des BEV.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="höhe-abfragen"&gt;Höhe abfragen&lt;span class="hx:absolute hx:-mt-20" id="höhe-abfragen"&gt;&lt;/span&gt;
+&lt;a href="#h%c3%b6he-abfragen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/tilequery/basis/15.3294,48.2272.json?radius=60&amp;amp;limit=3&amp;amp;layers=building_a&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[].properties.height&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Am 08.11.2026 lieferte das drei Gebäude mit 10,5 m, 12,5 m und 11 m Höhe.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="extrudieren"&gt;Extrudieren&lt;span class="hx:absolute hx:-mt-20" id="extrudieren"&gt;&lt;/span&gt;
+&lt;a href="#extrudieren" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Der Stil &lt;code&gt;streets&lt;/code&gt; enthält die Ebene &lt;code&gt;building-3d&lt;/code&gt; (Typ &lt;code&gt;fill-extrusion&lt;/code&gt;, ab Zoom 14) in der Gruppe &lt;code&gt;buildings3d&lt;/code&gt;. Sie liest &lt;code&gt;height&lt;/code&gt; direkt aus den Kacheln:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-js" data-lang="js"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;mapx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;container&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;map&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;streets&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;center&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;15.3294&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;48.2272&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nx"&gt;zoom&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;pitch&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Zoomen und die Karte kippen (rechte Maustaste oder zwei Finger). Die Gruppen des Stils stehen in &lt;code&gt;metadata[&amp;quot;mapx:groups&amp;quot;]&lt;/code&gt;, damit lässt sich die Ebene ein- und ausschalten, ohne ihre Ebenen-IDs zu kennen. Ein fertiges Beispiel zeigt die Doku.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/examples/buildings-3d/" target="_blank" rel="noopener"&gt;Beispiel 3D-Gebäude&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/styles/" target="_blank" rel="noopener"&gt;Styles-API&lt;/a&gt;. Quelle der Höhen: BEV, CC BY 4.0.&lt;/p&gt;</description></item><item><title>Lkw-Routing mit Maut-Hinweis</title><link>https://blog.mapx.at/lkw-routing-mit-maut/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/lkw-routing-mit-maut/</guid><description>
+&lt;p&gt;Ein Pkw-Navi schickt einen Sattelzug gern unter eine zu niedrige Brücke. Das Profil &lt;code&gt;driving-truck&lt;/code&gt; rechnet mit den Maßen des Fahrzeugs.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="aufruf"&gt;Aufruf&lt;span class="hx:absolute hx:-mt-20" id="aufruf"&gt;&lt;/span&gt;
+&lt;a href="#aufruf" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving-truck/15.6256,48.2049;15.3294,48.2272?weight=40&amp;amp;height=4&amp;amp;width=2.55&amp;amp;length=16.5&amp;amp;truck_type=semi&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0] | {distance, duration, truck, toll}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;weight&lt;/code&gt; (t), &lt;code&gt;height&lt;/code&gt;, &lt;code&gt;width&lt;/code&gt;, &lt;code&gt;length&lt;/code&gt; (m) und &lt;code&gt;truck_type&lt;/code&gt; (&lt;code&gt;semi&lt;/code&gt;, &lt;code&gt;rigid&lt;/code&gt;, &lt;code&gt;trailer&lt;/code&gt;) sperren Straßen je Fahrzeug: Gewichtsklassen, Sattel- und Anhängerverbote, Höhen-, Breiten-, Gewichts- und Längenbeschränkungen. Längenbeschränkungen werden nur geprüft, wenn &lt;code&gt;length&lt;/code&gt; angegeben ist.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="was-zurückkommt"&gt;Was zurückkommt&lt;span class="hx:absolute hx:-mt-20" id="was-zurückkommt"&gt;&lt;/span&gt;
+&lt;a href="#was-zur%c3%bcckkommt" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Für St. Pölten nach Melk am 08.11.2026: 30 095 m, 1 637 s. Dieselbe Strecke mit dem Profil &lt;code&gt;driving&lt;/code&gt; ergab 30 095 m in 1 286 s. Die Lkw-Fahrzeit ist länger, weil für Lkw Höchstgeschwindigkeiten gelten (laut Doku höchstens 80 km/h auf Autobahnen, 70 auf Freilandstraßen, 50 im Ortsgebiet).&lt;/p&gt;
+&lt;p&gt;Die Antwort enthält das verwendete Fahrzeug (&lt;code&gt;truck&lt;/code&gt;) und einen Maut-Block:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;toll&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;vehicle&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;truck&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_km&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;22.1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_required&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;tariff&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;not_calculated&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;...&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;truck_go_km&lt;/code&gt; sind die Kilometer, auf denen die Lkw-Maut (GO-Maut, ASFINAG) anfällt. Den Tarif berechnet die API nicht, er hängt von Achszahl und Emissionsklasse ab. Sondermauten (Brenner, Tauern, Arlberg u. a.) kommen dazu.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="grenzen"&gt;Grenzen&lt;span class="hx:absolute hx:-mt-20" id="grenzen"&gt;&lt;/span&gt;
+&lt;a href="#grenzen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Bezirksweite Fahrverbote aus Verordnungen werden nicht geroutet. Betroffene Straßen erscheinen als Hinweise (&lt;code&gt;steps[].notices[]&lt;/code&gt;, &lt;code&gt;type: truck_restriction&lt;/code&gt;). Mit &lt;code&gt;exclude=toll&lt;/code&gt; lassen sich mautpflichtige Abschnitte meiden.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/guides/navigation/" target="_blank" rel="noopener"&gt;Navigation&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/examples/truck-route/" target="_blank" rel="noopener"&gt;Beispiel Lkw-Route&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/directions/" target="_blank" rel="noopener"&gt;Directions-API&lt;/a&gt;. Mautquelle: ASFINAG, CC BY 4.0.&lt;/p&gt;</description></item><item><title>Truck routing with toll information</title><link>https://blog.mapx.at/lkw-routing-mit-maut-en/</link><pubDate>Sun, 08 Nov 2026 04:10:00 +0100</pubDate><guid>https://blog.mapx.at/lkw-routing-mit-maut-en/</guid><description>
+&lt;p&gt;A car navigation system happily sends an articulated lorry under a bridge that is too low. The &lt;code&gt;driving-truck&lt;/code&gt; profile routes with the vehicle&amp;rsquo;s dimensions.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="request"&gt;Request&lt;span class="hx:absolute hx:-mt-20" id="request"&gt;&lt;/span&gt;
+&lt;a href="#request" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/directions/driving-truck/15.6256,48.2049;15.3294,48.2272?weight=40&amp;amp;height=4&amp;amp;width=2.55&amp;amp;length=16.5&amp;amp;truck_type=semi&amp;amp;overview=false&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.routes[0] | {distance, duration, truck, toll}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;weight&lt;/code&gt; (t), &lt;code&gt;height&lt;/code&gt;, &lt;code&gt;width&lt;/code&gt;, &lt;code&gt;length&lt;/code&gt; (m) and &lt;code&gt;truck_type&lt;/code&gt; (&lt;code&gt;semi&lt;/code&gt;, &lt;code&gt;rigid&lt;/code&gt;, &lt;code&gt;trailer&lt;/code&gt;) block roads per vehicle: weight classes, semi and trailer bans, and height, width, weight and length limits. Length limits are only checked when &lt;code&gt;length&lt;/code&gt; is given.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="what-comes-back"&gt;What comes back&lt;span class="hx:absolute hx:-mt-20" id="what-comes-back"&gt;&lt;/span&gt;
+&lt;a href="#what-comes-back" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;St. Poelten to Melk on 8 Nov 2026: 30,095 m, 1,637 s. The same trip with profile &lt;code&gt;driving&lt;/code&gt; gave 30,095 m in 1,286 s. The truck takes longer because trucks get speed caps (per the docs at most 80 km/h on motorways, 70 on rural roads, 50 in built-up areas).&lt;/p&gt;
+&lt;p&gt;The response includes the vehicle used (&lt;code&gt;truck&lt;/code&gt;) and a toll block:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;toll&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;vehicle&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;truck&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_km&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;22.1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;truck_go_required&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;tariff&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;not_calculated&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;...&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;truck_go_km&lt;/code&gt; is the distance subject to the GO toll (ASFINAG). The API does not compute the tariff, which depends on axle count and emission class. Special toll sections (Brenner, Tauern, Arlberg and others) come on top.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="limits"&gt;Limits&lt;span class="hx:absolute hx:-mt-20" id="limits"&gt;&lt;/span&gt;
+&lt;a href="#limits" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;District-wide bans from ordinances are not routed. Affected roads show up as notices (&lt;code&gt;steps[].notices[]&lt;/code&gt;, &lt;code&gt;type: truck_restriction&lt;/code&gt;). Use &lt;code&gt;exclude=toll&lt;/code&gt; to avoid toll sections.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/guides/navigation/" target="_blank" rel="noopener"&gt;Navigation&lt;/a&gt;, &lt;a href="https://docs.mapx.at/examples/truck-route/" target="_blank" rel="noopener"&gt;truck route example&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/directions/" target="_blank" rel="noopener"&gt;Directions API&lt;/a&gt;. Toll source: ASFINAG, CC BY 4.0.&lt;/p&gt;</description></item><item><title>Parcel dossier and parcel search</title><link>https://blog.mapx.at/parzellen-dossier-und-suche-en/</link><pubDate>Sun, 08 Nov 2026 04:00:00 +0100</pubDate><guid>https://blog.mapx.at/parzellen-dossier-und-suche-en/</guid><description>
+&lt;p&gt;Judging a plot means area, land use, buildings and slope. That used to mean opening several sources. The parcel dossier makes it one call.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="which-parcel-is-here"&gt;Which parcel is here?&lt;span class="hx:absolute hx:-mt-20" id="which-parcel-is-here"&gt;&lt;/span&gt;
+&lt;a href="#which-parcel-is-here" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcel/15.3294,48.2272&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].properties | {parcel_number, cadastral_municipality_id, area_m2, is_building_land}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Response on 8 Nov 2026:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;parcel_number&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;473/1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;cadastral_municipality_id&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;14143&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;area_m2&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;562.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;is_building_land&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 data-hextra-search-id="the-dossier"&gt;The dossier&lt;span class="hx:absolute hx:-mt-20" id="the-dossier"&gt;&lt;/span&gt;
+&lt;a href="#the-dossier" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;With the id built from cadastral municipality and plot number (&lt;code&gt;14143-288_4&lt;/code&gt;), &lt;code&gt;/v1/parcels/{id}&lt;/code&gt; returns the full picture:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcels/14143-288_4&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.properties | {area_m2, land_use, buildings, elevation, nearest_transit_stop}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;For this plot in Melk the response says: 65,798 m2, of which 99.4 % farmland (fields, meadows, pasture) and 0.6 % scrub. Buildings: 0. Terrain: 228.5 to 240.8 m, mean slope 2.7 degrees, from the DTM with reference date 15 Sep 2025. Nearest stop: &amp;ldquo;Melk Mittelschule&amp;rdquo; (bus), 503 m away.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="search-by-plot-number"&gt;Search by plot number&lt;span class="hx:absolute hx:-mt-20" id="search-by-plot-number"&gt;&lt;/span&gt;
+&lt;a href="#search-by-plot-number" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Geocoding understands cadastral municipality and number. &lt;code&gt;types=parcel&lt;/code&gt; restricts results to plots:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=KG+14143+Gst+288/4&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-288_4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=Melk+.98&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-b98&amp;#34; (building parcel .98)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The id from the search plugs straight into the dossier call.&lt;/p&gt;
+&lt;p&gt;The basis is the BEV Digital Cadastral Map. All fields: &lt;a href="https://docs.mapx.at/guides/parcels/" target="_blank" rel="noopener"&gt;Parcels guide&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Parzellen-Dossier und Parzellensuche</title><link>https://blog.mapx.at/parzellen-dossier-und-suche/</link><pubDate>Sun, 08 Nov 2026 04:00:00 +0100</pubDate><guid>https://blog.mapx.at/parzellen-dossier-und-suche/</guid><description>
+&lt;p&gt;Wer ein Grundstück beurteilen soll, braucht Fläche, Nutzung, Bebauung und Geländeneigung. Bisher hieß das: mehrere Quellen öffnen. Mit dem Parzellen-Dossier ist es ein Aufruf.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="welche-parzelle-liegt-hier"&gt;Welche Parzelle liegt hier?&lt;span class="hx:absolute hx:-mt-20" id="welche-parzelle-liegt-hier"&gt;&lt;/span&gt;
+&lt;a href="#welche-parzelle-liegt-hier" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcel/15.3294,48.2272&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].properties | {parcel_number, cadastral_municipality_id, area_m2, is_building_land}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Antwort am 08.11.2026:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;parcel_number&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;473/1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;cadastral_municipality_id&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;14143&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;area_m2&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;562.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;is_building_land&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 data-hextra-search-id="das-dossier"&gt;Das Dossier&lt;span class="hx:absolute hx:-mt-20" id="das-dossier"&gt;&lt;/span&gt;
+&lt;a href="#das-dossier" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Mit der Kennung aus Katastralgemeinde und Grundstücksnummer (&lt;code&gt;14143-288_4&lt;/code&gt;) liefert &lt;code&gt;/v1/parcels/{id}&lt;/code&gt; das ganze Bild:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/parcels/14143-288_4&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.properties | {area_m2, land_use, buildings, elevation, nearest_transit_stop}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Aus der Antwort dieses Grundstücks in Melk: 65 798 m², davon 99,4 % Äcker, Wiesen oder Weiden und 0,6 % verbuschte Fläche. Gebäude: 0. Gelände: 228,5 bis 240,8 m, mittlere Neigung 2,7 Grad, Höhenmodell DTM mit Stichtag 15.09.2025. Nächste Haltestelle: „Melk Mittelschule“ (Bus), 503 m entfernt.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="suche-nach-grundstücksnummer"&gt;Suche nach Grundstücksnummer&lt;span class="hx:absolute hx:-mt-20" id="suche-nach-grundstücksnummer"&gt;&lt;/span&gt;
+&lt;a href="#suche-nach-grundst%c3%bccksnummer" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Geocoding-Suche versteht Katastralgemeinde und Nummer. &lt;code&gt;types=parcel&lt;/code&gt; begrenzt auf Grundstücke:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=KG+14143+Gst+288/4&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-288_4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode?q=Melk+.98&amp;amp;types=parcel&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0].id&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# &amp;#34;parcel-14143-b98&amp;#34; (Bauparzelle .98)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Die Kennung aus der Suche passt direkt in den Dossier-Aufruf.&lt;/p&gt;
+&lt;p&gt;Grundlage ist die Digitale Katastralmappe des BEV. Die Doku mit allen Feldern: &lt;a href="https://docs.mapx.at/de/guides/parcels/" target="_blank" rel="noopener"&gt;Parzellen-Leitfaden&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Road-kilometre search, park and ride, level crossings</title><link>https://blog.mapx.at/strassenkilometer-suche-und-pr-ebene-en/</link><pubDate>Sun, 08 Nov 2026 04:00:00 +0100</pubDate><guid>https://blog.mapx.at/strassenkilometer-suche-und-pr-ebene-en/</guid><description>
+&lt;p&gt;Road maintenance, traffic reports and accident notes name places as &amp;ldquo;A1 km 41&amp;rdquo;. Search understands that now.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="search-a-road-kilometre"&gt;Search a road kilometre&lt;span class="hx:absolute hx:-mt-20" id="search-a-road-kilometre"&gt;&lt;/span&gt;
+&lt;a href="#search-a-road-kilometre" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s -G &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode&amp;#34;&lt;/span&gt; --data-urlencode &lt;span class="s2"&gt;&amp;#34;q=A1 km 41&amp;#34;&lt;/span&gt; --data-urlencode &lt;span class="s2"&gt;&amp;#34;types=road_ref&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0] | {coordinates: .geometry.coordinates, road_ref: .properties.road_ref}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Response on 8 Nov 2026:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;coordinates&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="mf"&gt;15.845576&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;48.174449&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;road_ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;A1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;km&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;41.0&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;B83 km 329,7&lt;/code&gt; (comma as decimal separator) and &lt;code&gt;L190 km 3.5&lt;/code&gt; work as well. Per the docs there is a point every 0.1 km on motorways, expressways and federal roads and every 0.5 km on state roads; the nearest one is returned (source: GIP.at). For &lt;code&gt;B83 km 329,7&lt;/code&gt; the result on 8 Nov 2026 was a point in Carinthia (14.0286 / 46.6103).&lt;/p&gt;
+&lt;h2 data-hextra-search-id="park-and-ride-bike-and-ride-level-crossings"&gt;Park and ride, bike and ride, level crossings&lt;span class="hx:absolute hx:-mt-20" id="park-and-ride-bike-and-ride-level-crossings"&gt;&lt;/span&gt;
+&lt;a href="#park-and-ride-bike-and-ride-level-crossings" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The layer group &lt;code&gt;gip_poi&lt;/code&gt; in the &lt;code&gt;streets&lt;/code&gt; style shows, among others, park-and-ride sites, bike-and-ride sites and level crossings (&lt;code&gt;kind&lt;/code&gt;: &lt;code&gt;park_and_ride&lt;/code&gt;, &lt;code&gt;park_and_ride_garage&lt;/code&gt;, &lt;code&gt;bike_and_ride&lt;/code&gt;, &lt;code&gt;level_crossing&lt;/code&gt;). Tilequery tells you what is nearby:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/tilequery/gip-poi/15.3294,48.2272.json?radius=600&amp;amp;limit=10&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[] | {kind: .properties.kind, name: .properties.name, distance: .properties.tilequery.distance}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Around Melk on 8 Nov 2026 this returned a bike-and-ride site &amp;ldquo;Melk&amp;rdquo; at 310 m and a park-and-ride site &amp;ldquo;Melk&amp;rdquo; at 355 m. The layer is available from zoom 12.&lt;/p&gt;
+&lt;p&gt;More: &lt;a href="https://docs.mapx.at/api/geocoding/" target="_blank" rel="noopener"&gt;Geocoding API&lt;/a&gt;, &lt;a href="https://docs.mapx.at/api/tilequery/" target="_blank" rel="noopener"&gt;Tilequery&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Straßenkilometer-Suche, P+R und Bahnübergänge</title><link>https://blog.mapx.at/strassenkilometer-suche-und-pr-ebene/</link><pubDate>Sun, 08 Nov 2026 04:00:00 +0100</pubDate><guid>https://blog.mapx.at/strassenkilometer-suche-und-pr-ebene/</guid><description>
+&lt;p&gt;Straßenmeister, Verkehrsmeldungen und Unfallberichte nennen Orte als „A1 km 41“. Die Suche versteht das jetzt.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="straßenkilometer-suchen"&gt;Straßenkilometer suchen&lt;span class="hx:absolute hx:-mt-20" id="straßenkilometer-suchen"&gt;&lt;/span&gt;
+&lt;a href="#stra%c3%9fenkilometer-suchen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s -G &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/geocode&amp;#34;&lt;/span&gt; --data-urlencode &lt;span class="s2"&gt;&amp;#34;q=A1 km 41&amp;#34;&lt;/span&gt; --data-urlencode &lt;span class="s2"&gt;&amp;#34;types=road_ref&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[0] | {coordinates: .geometry.coordinates, road_ref: .properties.road_ref}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Antwort am 08.11.2026:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;coordinates&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="mf"&gt;15.845576&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;48.174449&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;road_ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:{&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;ref&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;A1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;km&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;41.0&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Auch &lt;code&gt;B83 km 329,7&lt;/code&gt; (Komma als Dezimaltrenner) und &lt;code&gt;L190 km 3.5&lt;/code&gt; funktionieren. Laut Doku gibt es Punkte alle 0,1 km auf Autobahnen, Schnellstraßen und Bundesstraßen und alle 0,5 km auf Landesstraßen; geliefert wird der nächstgelegene (Quelle: GIP.at). Bei &lt;code&gt;B83 km 329,7&lt;/code&gt; kam am 08.11.2026 ein Punkt in Kärnten (14,0286 / 46,6103) zurück.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="pr-br-und-bahnübergänge"&gt;P+R, B+R und Bahnübergänge&lt;span class="hx:absolute hx:-mt-20" id="pr-br-und-bahnübergänge"&gt;&lt;/span&gt;
+&lt;a href="#pr-br-und-bahn%c3%bcberg%c3%a4nge" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Ebenengruppe &lt;code&gt;gip_poi&lt;/code&gt; im Stil &lt;code&gt;streets&lt;/code&gt; zeigt unter anderem Park-and-Ride-Anlagen, Bike-and-Ride-Anlagen und Bahnübergänge (&lt;code&gt;kind&lt;/code&gt;: &lt;code&gt;park_and_ride&lt;/code&gt;, &lt;code&gt;park_and_ride_garage&lt;/code&gt;, &lt;code&gt;bike_and_ride&lt;/code&gt;, &lt;code&gt;level_crossing&lt;/code&gt;). Per Tilequery lässt sich abfragen, was in der Nähe liegt:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -s &lt;span class="s2"&gt;&amp;#34;https://api.mapx.at/v1/tilequery/gip-poi/15.3294,48.2272.json?radius=600&amp;amp;limit=10&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.features[] | {kind: .properties.kind, name: .properties.name, distance: .properties.tilequery.distance}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Rund um Melk kamen am 08.11.2026 zurück: eine Bike-and-Ride-Anlage „Melk“ in 310 m und eine Park-and-Ride-Anlage „Melk“ in 355 m Entfernung. Die Ebene ist ab Zoom 12 verfügbar.&lt;/p&gt;
+&lt;p&gt;Mehr: &lt;a href="https://docs.mapx.at/de/api/geocoding/" target="_blank" rel="noopener"&gt;Geocoding-API&lt;/a&gt;, &lt;a href="https://docs.mapx.at/de/api/tilequery/" target="_blank" rel="noopener"&gt;Tilequery&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Wie die Karte gebaut wird</title><link>https://blog.mapx.at/wie-die-karte-gebaut-wird/</link><pubDate>Sat, 07 Nov 2026 10:00:00 +0100</pubDate><guid>https://blog.mapx.at/wie-die-karte-gebaut-wird/</guid><description>
+&lt;p&gt;Eine Karte im Browser besteht aus vielen kleinen Dateien, den Kacheln. Dieser Beitrag zeigt, wie aus den amtlichen Rohdaten solche Kacheln werden, und nennt dabei nur Dinge, die wir selbst gemessen oder festgelegt haben.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="1-rohdaten-laden"&gt;1. Rohdaten laden&lt;span class="hx:absolute hx:-mt-20" id="1-rohdaten-laden"&gt;&lt;/span&gt;
+&lt;a href="#1-rohdaten-laden" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Alle Daten kommen von offenen Download-Adressen der Behörden, zum Beispiel &lt;code&gt;data.bev.gv.at/download/&lt;/code&gt;. Der Kataster liegt je Bundesland als DXF-Dateien je Katastralgemeinde vor, das Geländemodell als 55 Kacheln mit je 50 × 50 km im Format Cloud Optimized GeoTIFF. Weil diese Dateien Höhenwerte als Fließkommazahlen in einem eigenen Koordinatensystem (EPSG:3035) enthalten, lässt sich ein Ausschnitt per HTTP-Range-Anfrage laden, ohne die ganze Datei zu holen.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="2-vektorkacheln-kataster-straßen-namen"&gt;2. Vektorkacheln: Kataster, Straßen, Namen&lt;span class="hx:absolute hx:-mt-20" id="2-vektorkacheln-kataster-straßen-namen"&gt;&lt;/span&gt;
+&lt;a href="#2-vektorkacheln-kataster-stra%c3%9fen-namen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Vektorkarte besteht aus mehreren Themen-Dateien: Nutzung, Gebäude und Grundstücke aus dem Kataster, Straßen und Bahn aus der GIP, Gewässer aus dem Gesamtgewässernetz, Grenzen, Namen und Hausnummern. Jedes Thema wird zu einer eigenen Datei im PMTiles-Format.&lt;/p&gt;
+&lt;p&gt;Die Kacheln erzeugt ein selbst geschriebenes Werkzeug in Rust, das eine Teilmenge der Kommandozeile von tippecanoe nachbildet. Zwei Festlegungen prägen es:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nie ausdünnen.&lt;/strong&gt; Es werden weder Features verworfen noch Details gesenkt, auch nicht bei großen Kacheln. Zu große Kacheln werden gemeldet, nicht stillschweigend verkleinert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gleiches Ergebnis bei jedem Lauf.&lt;/strong&gt; Das Ergebnis ist byte-gleich, egal mit wie vielen Arbeitsprozessen und wie viel Speicher gerechnet wird.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Beim Vergleich mit tippecanoe auf kleinen Ausschnitten (rund 7 × 8 km um Melk, 18 Testfälle) war die Kachelmenge in allen Fällen gleich, die Fläche und Länge im sichtbaren Bereich wich um höchstens 0,05 % ab, mit einer künstlichen Ausnahme bei 1,2 %. Wie sich das Werkzeug auf ganz Österreich verhält, zeigen erst die großen Läufe.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="3-gelände-als-terrain-rgb"&gt;3. Gelände als Terrain-RGB&lt;span class="hx:absolute hx:-mt-20" id="3-gelände-als-terrain-rgb"&gt;&lt;/span&gt;
+&lt;a href="#3-gel%c3%a4nde-als-terrain-rgb" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Aus dem Höhenraster werden Rasterkacheln, in denen jede Höhe in die drei Farbkanäle eines Pixels gepackt ist. Die Formel lautet:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;Höhe = -10000 &amp;#43; (R·65536 &amp;#43; G·256 &amp;#43; B) · 0,1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Code kopieren"
+aria-label="Code kopieren"
+data-copied-label="Kopiert!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Das ergibt eine Genauigkeit von 0,1 m. Zwei Entscheidungen dahinter:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Verlustfrei speichern.&lt;/strong&gt; Die Kacheln sind WebP ohne Verlust, weil verlustbehaftete Kompression die kodierten Höhenwerte selbst verfälschen würde, nicht nur das Bild.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bilinear statt Lanczos.&lt;/strong&gt; Beim Umrechnen von EPSG:3035 nach Web-Mercator verwenden wir bilineare Interpolation. Lanczos erzeugt an steilen Klippen Überschwinger, die echte Höhenwerte verändern.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Das fertige Geländemodell reicht von Zoomstufe 5 bis 16. Für Österreich haben wir Höhen zwischen 113 und 3680,6 m geprüft.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="4-höhenlinien-und-schummerung"&gt;4. Höhenlinien und Schummerung&lt;span class="hx:absolute hx:-mt-20" id="4-höhenlinien-und-schummerung"&gt;&lt;/span&gt;
+&lt;a href="#4-h%c3%b6henlinien-und-schummerung" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Höhenlinien werden aus demselben Geländemodell gerechnet und als Vektorkacheln ausgeliefert, im Bereich der Zoomstufen 10 bis 16. Die Schummerung und das 3D-Gelände des Viewers lesen direkt die Terrain-RGB-Kacheln.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="5-ausliefern-ohne-kartenserver"&gt;5. Ausliefern ohne Kartenserver&lt;span class="hx:absolute hx:-mt-20" id="5-ausliefern-ohne-kartenserver"&gt;&lt;/span&gt;
+&lt;a href="#5-ausliefern-ohne-kartenserver" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;PMTiles ist ein einzelnes Archiv mit allen Kacheln eines Themas. Der Browser liest daraus per HTTP-Range-Anfrage genau die Kacheln, die er braucht. Dafür braucht es keinen Kartenserver, sondern einen Webserver, der Range-Anfragen versteht. Im Viewer kümmert sich MapLibre GL JS mit dem PMTiles-Protokoll um den Rest.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="6-suche-routing-und-höhen-api"&gt;6. Suche, Routing und Höhen-API&lt;span class="hx:absolute hx:-mt-20" id="6-suche-routing-und-höhen-api"&gt;&lt;/span&gt;
+&lt;a href="#6-suche-routing-und-h%c3%b6hen-api" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Neben den Kacheln gibt es drei Dienste, die auf denselben Quellen aufbauen:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Suche&lt;/strong&gt; über einen Meilisearch-Index mit Adressen, Orten, Straßen und Grundstücken. Bei unserer Messung am 1. November 2026 hatte er rund 3,05 Millionen Einträge, davon etwa 2,53 Millionen Adressen. Grundstücke sind bisher nur für den Bezirk Melk enthalten.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Routing&lt;/strong&gt; mit einer eigenen Rust-Engine auf dem Routingexport der GIP, für Auto, Rad und zu Fuß, mit Abbiegeverboten.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Höhen-API:&lt;/strong&gt; &lt;code&gt;GET https://api.mapx.at/v1/elevation?points=12.694,47.074&lt;/code&gt; liefert eine GeoJSON-Antwort mit Höhe, Rasterweite und Stichtag, auch als Profil entlang einer Linie.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 data-hextra-search-id="was-noch-fehlt"&gt;Was noch fehlt&lt;span class="hx:absolute hx:-mt-20" id="was-noch-fehlt"&gt;&lt;/span&gt;
+&lt;a href="#was-noch-fehlt" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Nicht alles ist für ganz Österreich fertig. Der Ausbau auf ganz Österreich ist je Thema unterschiedlich weit. Der aktuelle Stand je Produkt steht in der Doku auf docs.mapx.at, nicht hier.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Quellen: interne Dokumentation der Pipeline (DTM, Tiles-Rust, Relief und Höhenlinien, Suche, Routing), Stand 01.–07.11.2026.&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Warum nur amtliche Daten</title><link>https://blog.mapx.at/warum-nur-amtliche-daten/</link><pubDate>Sat, 07 Nov 2026 09:00:00 +0100</pubDate><guid>https://blog.mapx.at/warum-nur-amtliche-daten/</guid><description>
+&lt;p&gt;mapx ist eine Karte für Österreich, und fast alles darauf stammt von österreichischen Behörden. Das ist eine bewusste Entscheidung, keine Notlösung. Dieser Beitrag erklärt, warum wir so arbeiten und was man dabei in Kauf nimmt.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="was-wir-verwenden"&gt;Was wir verwenden&lt;span class="hx:absolute hx:-mt-20" id="was-wir-verwenden"&gt;&lt;/span&gt;
+&lt;a href="#was-wir-verwenden" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Die Quellen der Vektor-Basiskarte sind einzeln dokumentiert, jeweils mit Herausgeber, Stichtag und Lizenz. Die wichtigsten:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Zweck&lt;/th&gt;
+&lt;th&gt;Quelle&lt;/th&gt;
+&lt;th&gt;Lizenz&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Grundstücke, Nutzung, Gebäude&lt;/td&gt;
+&lt;td&gt;Digitale Katastralmappe (DKM), BEV&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Verwaltungsgrenzen&lt;/td&gt;
+&lt;td&gt;Verwaltungsgrenzen (VGD), BEV&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Geländemodell, Höhenlinien&lt;/td&gt;
+&lt;td&gt;ALS-DTM, Höhenraster 1 m, BEV&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Straßen, Bahn, Routing&lt;/td&gt;
+&lt;td&gt;Graphenintegrations-Plattform GIP.at&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gewässer&lt;/td&gt;
+&lt;td&gt;Gesamtgewässernetz GGN, Umweltbundesamt&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hausnummern, Adressen&lt;/td&gt;
+&lt;td&gt;Adressregister (Stichtagsdaten), BEV&lt;/td&gt;
+&lt;td&gt;CC BY 4.0, mit Pflichtvermerk&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Namen von Orten, Gipfeln, Objekten&lt;/td&gt;
+&lt;td&gt;DLM Geographische Namen, BEV&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Dazu kommt Wikidata für Flugplätze (CC0) und die Einwohnerzahl je Gemeinde von Statistik Austria für die Rangfolge der Ortsnamen.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="warum-nicht-auch-openstreetmap"&gt;Warum nicht auch OpenStreetMap?&lt;span class="hx:absolute hx:-mt-20" id="warum-nicht-auch-openstreetmap"&gt;&lt;/span&gt;
+&lt;a href="#warum-nicht-auch-openstreetmap" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenStreetMap ist ein großartiges Projekt, aber es ist für mapx keine Quelle. Wir haben das am 5. November 2026 so festgelegt: Auch Punkte von Interesse sollen aus amtlichen oder behördlichen Daten kommen, die offen und mit klarer Lizenz veröffentlicht sind. Drei Gründe:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Herkunft nachweisbar.&lt;/strong&gt; Zu jedem Objekt auf der Karte gibt es einen Datensatz, einen Herausgeber und einen Stichtag. Das beantwortet die Frage „Woher kommt das?“ in einem Satz.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Eine Lizenzfrage statt vieler.&lt;/strong&gt; Alle verwendeten Datensätze stehen unter CC BY 4.0 oder CC0. Die Namensnennung lässt sich je Quelle fertig formulieren.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reproduzierbar.&lt;/strong&gt; Wer denselben Stichtag lädt, bekommt dieselbe Karte.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 data-hextra-search-id="was-amtliche-daten-gut-können"&gt;Was amtliche Daten gut können&lt;span class="hx:absolute hx:-mt-20" id="was-amtliche-daten-gut-können"&gt;&lt;/span&gt;
+&lt;a href="#was-amtliche-daten-gut-k%c3%b6nnen" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Gerade bei Dingen, die für Orientierung im Gelände und für Verwaltung wichtig sind, ist die Lage gut. Der Kataster liefert Grundstücksgrenzen, die sonst niemand hat. Das Geländemodell des BEV hat eine Rasterweite von 1 m. Das DLM des BEV kennt Gipfelkreuze, Wegkreuze, Bildstöcke, Kapellen, Höhlen, Schutzhütten, Burgen, Ruinen und Aussichtstürme.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="wo-es-weh-tut"&gt;Wo es weh tut&lt;span class="hx:absolute hx:-mt-20" id="wo-es-weh-tut"&gt;&lt;/span&gt;
+&lt;a href="#wo-es-weh-tut" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Amtliche Daten sind nicht vollständig im Sinn einer Stadtkarte. In unserer Bewertung der BEV-Punktdaten fehlt der kommerzielle Bereich: Geschäfte, Supermärkte, Restaurants (nur Ausflugsgasthöfe), Hotels, Bankomaten und niedergelassene Ärzte. Für eine Karte zum Einkaufen und Essen reicht das nicht, für eine Karte zum Wandern, Planen und Vermessen sehr wohl. mapx ist deshalb eine amtlich-touristische Karte und keine Branchenkarte.&lt;/p&gt;
+&lt;p&gt;Dazu kommt der Rhythmus. Die Stichtage sind uneinheitlich: Der Kataster hatte bei unserem Stand den 1. April 2026, die Adressen den 1. Oktober 2026, die Namen den 23. März 2026. Neubauten tauchen im Kataster später auf als im Adressregister. Das erklärt einen Teil der Abweichungen zwischen Adresspunkten und Gebäuden, und wir weisen den Stand jedes Datensatzes aus, statt ihn zu verstecken.&lt;/p&gt;
+&lt;p&gt;Eine praktische Beobachtung am Rand: Das BEV stellt neue Stände oft Wochen vor dem Katalogeintrag als Datei bereit. Beim Verwaltungsgrenzen-Stand vom 1. Oktober 2026 lag die Datei am 2. Oktober vor, während der Katalog noch den April-Stand zeigte. Unsere Aktualisierung prüft deshalb die erwartete Adresse des nächsten Stichtags direkt, nicht nur den Katalog.&lt;/p&gt;
+&lt;h2 data-hextra-search-id="und-die-attribution"&gt;Und die Attribution?&lt;span class="hx:absolute hx:-mt-20" id="und-die-attribution"&gt;&lt;/span&gt;
+&lt;a href="#und-die-attribution" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Jede Quelle verlangt Namensnennung. Die Karte zeigt sie je Datensatz in der Quellenangabe, die Doku auf docs.mapx.at stellt zu jedem Produkt einen kopierbaren Text bereit. Das Adressregister verlangt zusätzlich einen Pflichtvermerk mit dem Stichtag.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Quellen: interne Dokumentation der Datenquellen (Stand 31.10.2026) und der Entscheidungen zur Datenauswahl (Stand 05.11.2026).&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
