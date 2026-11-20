@@ -2,8 +2,8 @@
 &lt;p&gt;mapx ist online. Die Seite bietet Karten, Suche, Routing und Geodaten für ganz Österreich, gebaut aus offenen Daten österreichischer Behörden.&lt;/p&gt;
 &lt;h2 data-hextra-search-id="was-es-gibt"&gt;Was es gibt&lt;span class="hx:absolute hx:-mt-20" id="was-es-gibt"&gt;&lt;/span&gt;
 &lt;a href="#was-es-gibt" class="subheading-anchor" aria-label="Permalink für diesen Abschnitt"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Die Karte&lt;/strong&gt; unter &lt;a href="https://map.mapx.at" target="_blank" rel="noopener"&gt;map.mapx.at&lt;/a&gt;: Basiskarte, Luftbild, Grundstücke, Gelände, öffentlicher Verkehr und Verkehrslage.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Die Schnittstellen&lt;/strong&gt; für eigene Anwendungen: Kartenkacheln und Stile, Adress- und Ortssuche, Routing, Höhen, Grundstücke, Fahrplan, Wetter und Verkehr. Die Beschreibung mit Beispielen steht in der &lt;a href="https://docs.mapx.at/de/" target="_blank" rel="noopener"&gt;Doku&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Die Karte&lt;/strong&gt; unter &lt;a href="https://map.mapx.at" target="_blank" rel="noopener"&gt;map.mapx.at&lt;/a&gt;: Basiskarte, Luftbild, Gelände, öffentlicher Verkehr und Verkehrslage.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Die Schnittstellen&lt;/strong&gt; für eigene Anwendungen: Kartenkacheln und Stile, Adress- und Ortssuche, Routing, Höhen, Fahrplan, Wetter und Verkehr. Die Beschreibung mit Beispielen steht in der &lt;a href="https://docs.mapx.at/de/" target="_blank" rel="noopener"&gt;Doku&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Ein kostenloses Konto&lt;/strong&gt; unter &lt;a href="https://account.mapx.at/register?lang=de" target="_blank" rel="noopener"&gt;account.mapx.at&lt;/a&gt;: Anmeldung mit einem Code per E-Mail, danach legst du dir einen Token für deine Anwendung an.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 data-hextra-search-id="woher-die-daten-kommen"&gt;Woher die Daten kommen&lt;span class="hx:absolute hx:-mt-20" id="woher-die-daten-kommen"&gt;&lt;/span&gt;
